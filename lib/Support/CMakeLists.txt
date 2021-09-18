@@ -59,7 +59,6 @@ if(LLVM_INTEGRATED_CRT_ALLOC)
         "LLVM_INTEGRATED_CRT_ALLOC only works with /MT or /MTd. Use LLVM_USE_CRT_${uppercase_CMAKE_BUILD_TYPE} to set the appropriate option."
     )
   endif()
-
   string(REGEX REPLACE "(/|\\\\)$" "" LLVM_INTEGRATED_CRT_ALLOC
                        "${LLVM_INTEGRATED_CRT_ALLOC}")
 
@@ -91,10 +90,10 @@ if(LLVM_INTEGRATED_CRT_ALLOC)
 endif()
 
 # llvm_add_library
-llvm_add_library(
-  LLVMSupport
-  SHARED
-  # add_llvm_component_library(LLVMSupport
+# llvm_add_library(
+#   LLVMSupport
+#   SHARED
+  add_llvm_component_library(LLVMSupport
   AArch64TargetParser.cpp
   ABIBreak.cpp
   ARMTargetParser.cpp
