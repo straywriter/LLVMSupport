@@ -128,7 +128,21 @@
 #   add_subdirectory(DynamicLibrary)
 # endif()
 
+file(GLOB CoreFile ./*.cpp)
+
+foreach(TestFile ${CoreFile})
+  get_filename_component(TestFileName ${TestFile} NAME_WE)
+  add_executable(${TestFileName} ${TestFile} )
+  target_include_directories(${TestFileName}  PUBLIC  ${LLVM_MAIN_INCLUDE_DIR})
+  target_link_libraries(${TestFileName} PRIVATE LLVMSupport gtest_main)
+  # target_link_libraries(${TestFileName} PRIVATE  )
+  add_test(${TestFileName} ${TestFileName})
+
+#    target_compile_definitions (${TestFileName} PRIVATE _CRT_SECURE_NO_WARNINGS)
+  # $set_tests_properties(${TestFileName} PROPERTIES TIMEOUT 5)
+endforeach()
+
+# add_executable(test ProcessTest.cpp)
+# target_link_libraries(test PUBLIC LLVMSupport gtest_main)
 
 
-add_executable(test ProcessTest.cpp)
-target_link_libraries(test PUBLIC LLVMSupport gtest_main)

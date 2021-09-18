@@ -17,9 +17,13 @@ set_target_properties(gtest PROPERTIES VERSION ${GOOGLETEST_VERSION})
 set_target_properties(gtest PROPERTIES FOLDER "External")
 
 # if(MSVC)
+
+# if(MSVC)
 target_compile_options(
-  gtest
-  PUBLIC -GS
+  gtest 
+  PUBLIC
+         $<$<CXX_COMPILER_ID:MSVC>:
+         -GS
          -W4
          -WX
          -wd4251
@@ -63,6 +67,7 @@ target_compile_options(
          >)
 # endif()
 
+
 add_library(gtest_main)
 target_sources(gtest_main PUBLIC ${GoogleTestSourceDir}/gtest_main.cc
                                  ${GoogleTestSourceDir}/gtest-all.cc)
@@ -71,10 +76,11 @@ set_target_properties(gtest_main PROPERTIES VERSION ${GOOGLETEST_VERSION})
 target_include_directories(gtest_main PUBLIC ${GoogleTestIncludeDir})
 
 # MSVC flag
-if(MSVC)
   target_compile_options(
     gtest_main
-    PUBLIC -GS
+    PUBLIC 
+           $<$<CXX_COMPILER_ID:MSVC>:
+           -GS
            -W4
            -WX
            -wd4251
@@ -95,7 +101,7 @@ if(MSVC)
            -wd4702
            -utf-8
            >)
-endif()
+
 # # MSVC flag if(MSVC) target_compile_options( gtest_main PUBLIC
 # $<$<CONFIG:>:/MT> $<$<CONFIG:Debug>:/MTd> $<$<CONFIG:Release>:/MT>
 # $<$<CXX_COMPILER_ID:MSVC>: -GS -W4 -WX -wd4251 -wd4275 -nologo -J -D_UNICODE

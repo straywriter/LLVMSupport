@@ -2486,6 +2486,7 @@ static std::vector<VersionPrinterTy> *ExtraVersionPrinters = nullptr;
 #endif
 
 #define PACKAGE_NAME "LLVM"
+#define PACKAGE_VERSION "12.0.0"
 
 namespace {
 class VersionPrinter {
