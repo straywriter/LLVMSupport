@@ -92,7 +92,7 @@ endif()
 # llvm_add_library
 # llvm_add_library(
 #   LLVMSupport
-#   SHARED
+  # SHARED
   add_llvm_component_library(LLVMSupport
   AArch64TargetParser.cpp
   ABIBreak.cpp
