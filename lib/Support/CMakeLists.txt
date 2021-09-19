@@ -1,7 +1,7 @@
 include(GetLibraryName)
 
 if(LLVM_ENABLE_ZLIB)
-  set(imported_libs ZLIB::ZLIB)
+  set(imported_libs zlibstatic)
 endif()
 
 if(MSVC OR MINGW)
@@ -237,6 +237,7 @@ endif()
   ${LLVM_MAIN_INCLUDE_DIR}/llvm/ADT
   ${LLVM_MAIN_INCLUDE_DIR}/llvm/Support
   ${Backtrace_INCLUDE_DIRS}
+  ${ZlibIncludeDir}
   LINK_LIBS
   ${system_libs}
   ${imported_libs}
@@ -246,25 +247,26 @@ endif()
 
 set(llvm_system_libs ${system_libs})
 
+target_include_directories(LLVMSupport PUBLIC  ${ZlibIncludeDir})
 # This block is only needed for llvm-config. When we deprecate llvm-config and
 # move to using CMake export, this block can be removed.
 if(LLVM_ENABLE_ZLIB)
   # CMAKE_BUILD_TYPE is only meaningful to single-configuration generators.
-  if(CMAKE_BUILD_TYPE)
-    string(TOUPPER ${CMAKE_BUILD_TYPE} build_type)
-    get_property(
-      zlib_library
-      TARGET ZLIB::ZLIB
-      PROPERTY LOCATION_${build_type})
-  endif()
-  if(NOT zlib_library)
-    get_property(
-      zlib_library
-      TARGET ZLIB::ZLIB
-      PROPERTY LOCATION)
-  endif()
-  get_library_name(${zlib_library} zlib_library)
-  set(llvm_system_libs ${llvm_system_libs} "${zlib_library}")
+  # if(CMAKE_BUILD_TYPE)
+  #   string(TOUPPER ${CMAKE_BUILD_TYPE} build_type)
+  #   get_property(
+  #     zlib_library
+  #     TARGET ZLIB::ZLIB
+  #     PROPERTY LOCATION_${build_type})
+  # endif()
+  # if(NOT zlib_library)
+  #   get_property(
+  #     zlib_library
+  #     TARGET ZLIB::ZLIB
+  #     PROPERTY LOCATION)
+  # endif()
+  # get_library_name(${zlib_library} zlib_library)
+  # set(llvm_system_libs ${llvm_system_libs} "${zlib_library}")
 endif()
 
 if(LLVM_ENABLE_TERMINFO)

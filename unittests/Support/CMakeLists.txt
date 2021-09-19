@@ -134,7 +134,7 @@ foreach(TestFile ${CoreFile})
   get_filename_component(TestFileName ${TestFile} NAME_WE)
   add_executable(${TestFileName} ${TestFile} )
   target_include_directories(${TestFileName}  PUBLIC  ${LLVM_MAIN_INCLUDE_DIR})
-  target_link_libraries(${TestFileName} PRIVATE LLVMSupport gtest_main)
+  target_link_libraries(${TestFileName} PRIVATE LLVMSupport gtest_main gmock LLVMTestingSupport)
   # target_link_libraries(${TestFileName} PRIVATE  )
   add_test(${TestFileName} ${TestFileName})
 
@@ -142,6 +142,7 @@ foreach(TestFile ${CoreFile})
   # $set_tests_properties(${TestFileName} PROPERTIES TIMEOUT 5)
 endforeach()
 
+# add_subdirectory(DynamicLibrary)
 # add_executable(test ProcessTest.cpp)
 # target_link_libraries(test PUBLIC LLVMSupport gtest_main)
 
